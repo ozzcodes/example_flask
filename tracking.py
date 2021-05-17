@@ -13,7 +13,6 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + join(_cwd, 'flask-tracking.db')
 SQLALCHEMY_ECHO = True
 WTF_CSRF_SECRET_KEY = 'this-should-be-more-random'
 
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -28,7 +27,7 @@ class Site(db.Model):
     visits = db.relationship('Visit', backref='tracking_site', lazy='select')
 
     def __repr__(self):
-        return '<Site %r>' % (self.base_url)
+        return '<Site %r>' % self.base_url
 
     def __str__(self):
         return self.base_url
@@ -71,7 +70,7 @@ def index():
                            visit_form=visit_form)
 
 
-@app.route("/site", methods=("POST", ))
+@app.route("/site", methods=("POST",))
 def add_site():
     form = SiteForm()
     if form.validate_on_submit():
@@ -84,7 +83,7 @@ def add_site():
     return render_template("validation_error.html", form=form)
 
 
-@app.route("/visit", methods=("POST", ))
+@app.route("/visit", methods=("POST",))
 def add_visit():
     form = VisitForm()
     if form.validate_on_submit():
@@ -137,6 +136,7 @@ def query_to_list(query, include_field_names=True):
 def obj_to_list(sa_obj, field_order):
     """Takes a SQLAlchemy object - returns a list of all its data"""
     return [getattr(sa_obj, field_name, None) for field_name in field_order]
+
 
 if __name__ == "__main__":
     app.debug = True
