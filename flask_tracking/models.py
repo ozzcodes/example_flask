@@ -1,4 +1,4 @@
-lass Site(db.Model):
+class Site(db.Model):
     __tablename__ = 'tracking_site'
 
     id = db.Column(db.Integer, primary_key=True)
